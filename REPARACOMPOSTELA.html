@@ -1,0 +1,903 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Repara Compostela - Laptop View</title>
+    <style>
+        :root {
+            --primary-pink: #ec4899;
+            --primary-pink-hover: #db2777;
+            --light-pink: #fdf2f8;
+            --accent-pink: #f472b6;
+            --dark-pink: #831843;
+            --bg-color: #faf5f7;
+            --card-bg: #ffffff;
+            --text-color: #374151;
+            --border-color: #fbcfe8;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Top Header */
+        header {
+            background-color: var(--card-bg);
+            border-bottom: 2px solid var(--border-color);
+            padding: 12px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 50;
+            box-shadow: 0 2px 10px rgba(236, 72, 153, 0.05);
+        }
+
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .menu-btn {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--primary-pink);
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: var(--primary-pink);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 15px;
+            margin-left: 30px;
+        }
+
+        .nav-btn {
+            background: transparent;
+            border: none;
+            padding: 8px 16px;
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: #6b7280;
+            cursor: pointer;
+            border-radius: 20px;
+            transition: all 0.2s;
+        }
+
+        .nav-btn.active, .nav-btn:hover {
+            background-color: var(--light-pink);
+            color: var(--primary-pink);
+        }
+
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .profile-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: var(--light-pink);
+            border: 2px solid var(--accent-pink);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-weight: bold;
+            color: var(--primary-pink);
+        }
+
+        /* Container Layout */
+        .main-wrapper {
+            max-width: 1200px;
+            width: 100%;
+            margin: 30px auto;
+            padding: 0 20px;
+            flex: 1;
+        }
+
+        /* Pages */
+        .page {
+            display: none;
+        }
+
+        .page.active {
+            display: block;
+        }
+
+        /* Cards & Buttons */
+        .card {
+            background: var(--card-bg);
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+            padding: 24px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.03);
+            margin-bottom: 20px;
+        }
+
+        .btn-pink {
+            background-color: var(--primary-pink);
+            color: white;
+            border: none;
+            padding: 10px 24px;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .btn-pink:hover {
+            background-color: var(--primary-pink-hover);
+        }
+
+        .btn-secondary {
+            background-color: #f3f4f6;
+            color: #4b5563;
+            border: 1px solid #d1d5db;
+            padding: 10px 24px;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        /* Report Button CTA */
+        .create-report-card {
+            background: linear-gradient(135deg, #fdf2f8 0%, #fce7f3 100%);
+            border: 2px dashed var(--accent-pink);
+            text-align: center;
+            padding: 40px;
+            border-radius: 16px;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+
+        .create-report-card:hover {
+            transform: translateY(-2px);
+        }
+
+        .plus-icon {
+            width: 60px;
+            height: 60px;
+            background-color: var(--primary-pink);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            margin: 0 auto 15px auto;
+            box-shadow: 0 4px 10px rgba(236, 72, 153, 0.3);
+        }
+
+        /* Form Controls */
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: var(--dark-pink);
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            font-size: 0.95rem;
+            outline: none;
+        }
+
+        .form-control:focus {
+            border-color: var(--primary-pink);
+            box-shadow: 0 0 0 3px rgba(236, 72, 153, 0.1);
+        }
+
+        /* Badges */
+        .badge {
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            display: inline-block;
+        }
+        .badge-review { background-color: #fef3c7; color: #d97706; }
+        .badge-progress { background-color: #e0f2fe; color: #0284c7; }
+        .badge-resolved { background-color: #dcfce7; color: #15803d; }
+
+        /* Status Tracker Steps */
+        .tracker {
+            display: flex;
+            justify-content: space-between;
+            margin: 30px 0;
+            position: relative;
+        }
+
+        .tracker::before {
+            content: '';
+            position: absolute;
+            top: 20px;
+            left: 10%;
+            right: 10%;
+            height: 4px;
+            background-color: #e5e7eb;
+            z-index: 1;
+        }
+
+        .step {
+            position: relative;
+            z-index: 2;
+            background: white;
+            padding: 0 10px;
+            text-align: center;
+        }
+
+        .step-circle {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: #e5e7eb;
+            color: #6b7280;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            margin: 0 auto 8px auto;
+        }
+
+        .step.active .step-circle {
+            background-color: var(--primary-pink);
+            color: white;
+        }
+
+        .step.active {
+            color: var(--primary-pink);
+            font-weight: bold;
+        }
+
+        /* Sidebar Drawer */
+        .sidebar {
+            position: fixed;
+            top: 0;
+            left: -300px;
+            width: 300px;
+            height: 100%;
+            background-color: white;
+            box-shadow: 4px 0 15px rgba(0, 0, 0, 0.1);
+            transition: left 0.3s ease;
+            z-index: 100;
+            padding: 20px;
+        }
+
+        .sidebar.open {
+            left: 0;
+        }
+
+        .sidebar-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.3);
+            display: none;
+            z-index: 99;
+        }
+
+        .sidebar-overlay.active {
+            display: block;
+        }
+
+        .sidebar-menu {
+            list-style: none;
+            margin-top: 30px;
+        }
+
+        .sidebar-menu li {
+            padding: 12px;
+            border-radius: 8px;
+            cursor: pointer;
+            margin-bottom: 8px;
+            font-weight: 600;
+        }
+
+        .sidebar-menu li:hover {
+            background-color: var(--light-pink);
+            color: var(--primary-pink);
+        }
+
+        /* Table view for admin */
+        .admin-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+        }
+
+        .admin-table th, .admin-table td {
+            padding: 12px;
+            border: 1px solid var(--border-color);
+            text-align: left;
+        }
+
+        .admin-table th {
+            background-color: var(--light-pink);
+            color: var(--dark-pink);
+        }
+
+        /* Back Arrow */
+        .back-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            color: var(--primary-pink);
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Sidebar Drawer -->
+    <div class="sidebar-overlay" id="overlay" onclick="toggleSidebar()"></div>
+    <div class="sidebar" id="sidebar">
+        <h2 style="color: var(--primary-pink);">Repara Menu</h2>
+        <p style="font-size: 0.85rem; color: #666;">Compostela Community Portal</p>
+        <ul class="sidebar-menu">
+            <li onclick="showPage('page-home'); toggleSidebar();">🏠 Home</li>
+            <li onclick="showPage('page-settings'); toggleSidebar();">⚙️ Settings</li>
+            <li onclick="showPage('page-help'); toggleSidebar();">❓ Help & Feedback</li>
+            <li onclick="showPage('page-about'); toggleSidebar();">ℹ️ About Repara</li>
+            <hr style="margin: 15px 0; border: none; border-top: 1px solid var(--border-color);">
+            <li onclick="showPage('page-login'); toggleSidebar();" style="color: #ef4444;">🔒 Switch/Log Out</li>
+        </ul>
+    </div>
+
+    <!-- Top Header -->
+    <header id="main-header" style="display: none;">
+        <div class="header-left">
+            <button class="menu-btn" onclick="toggleSidebar()">☰</button>
+            <div class="logo" onclick="showPage('page-home')">
+                <span>📍</span> REPARA COMPOSTELA
+            </div>
+            <div class="nav-links">
+                <button class="nav-btn active" id="nav-home" onclick="showPage('page-home')">Home</button>
+                <button class="nav-btn" id="nav-reports" onclick="showPage('page-my-reports')">My Reports</button>
+                <button class="nav-btn" id="nav-notifs" onclick="showPage('page-notifications')">Notifications <span id="notif-badge" style="background: var(--primary-pink); color: white; padding: 2px 6px; border-radius: 10px; font-size: 0.75rem;">1</span></button>
+            </div>
+        </div>
+        <div class="header-right">
+            <span style="font-size: 0.9rem; font-weight: 600;" id="user-display-name">Hershey Villaquer</span>
+            <div class="profile-icon" onclick="showPage('page-profile')">HV</div>
+        </div>
+    </header>
+
+    <!-- Main Content Wrapper -->
+    <div class="main-wrapper">
+
+        <!-- ================= 0. LOGIN PAGE ================= -->
+        <div id="page-login" class="page active">
+            <div class="card" style="max-width: 450px; margin: 80px auto; text-align: center;">
+                <h1 style="color: var(--primary-pink); margin-bottom: 10px;">Repara Compostela</h1>
+                <p style="color: #666; margin-bottom: 30px;">Report it, Track it, Fix it</p>
+                
+                <div class="form-group" style="text-align: left;">
+                    <label>Account Type</label>
+                    <select id="login-role" class="form-control" onchange="toggleAdminNotice()">
+                        <option value="resident">Resident User</option>
+                        <option value="admin">LGU Admin</option>
+                    </select>
+                </div>
+                <div class="form-group" style="text-align: left;">
+                    <label>Username</label>
+                    <input type="text" id="login-user" class="form-control" value="Hershey Villaquer">
+                </div>
+                <div class="form-group" style="text-align: left;">
+                    <label>Password</label>
+                    <input type="password" id="login-pass" class="form-control" value="••••••••">
+                </div>
+                <p id="admin-info" style="display:none; font-size: 0.8rem; color: var(--primary-pink); margin-bottom: 15px;">* LGU Admin Credentials Hint: Username: <b>admin</b> | Password: <b>admin123</b></p>
+
+                <button class="btn-pink" style="width: 100%; padding: 12px;" onclick="handleLogin()">Login to Portal</button>
+            </div>
+        </div>
+
+        <!-- ================= 1. HOME PAGE ================= -->
+        <div id="page-home" class="page">
+            <div class="create-report-card" onclick="showPage('page-create-report')">
+                <div class="plus-icon">+</div>
+                <h2 style="color: var(--dark-pink);">Report a Community Problem</h2>
+                <p style="color: #666; margin-top: 5px;">Click here to submit details about broken roads, streetlights, or waste issues.</p>
+            </div>
+
+            <h3 style="margin: 30px 0 15px 0; color: var(--dark-pink);">Recent Activity Overview</h3>
+            <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px;">
+                <div class="card">
+                    <h4 style="color: #666;">Total Submitted</h4>
+                    <p style="font-size: 2rem; font-weight: bold; color: var(--primary-pink);" id="stat-total">3</p>
+                </div>
+                <div class="card">
+                    <h4 style="color: #666;">In Progress</h4>
+                    <p style="font-size: 2rem; font-weight: bold; color: #0284c7;" id="stat-progress">1</p>
+                </div>
+                <div class="card">
+                    <h4 style="color: #666;">Resolved</h4>
+                    <p style="font-size: 2rem; font-weight: bold; color: #15803d;" id="stat-resolved">1</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- ================= 2. CREATE REPORT FORM ================= -->
+        <div id="page-create-report" class="page">
+            <div class="back-btn" onclick="showPage('page-home')">← Back to Home</div>
+            <div class="card" style="max-width: 700px; margin: 0 auto;">
+                <h2 style="color: var(--dark-pink); margin-bottom: 20px;">Report a Community Problem</h2>
+                
+                <div class="form-group">
+                    <label>1. What is the problem type?</label>
+                    <select id="form-type" class="form-control">
+                        <option>Broken Road</option>
+                        <option>Busted Streetlight</option>
+                        <option>Garbage Collection Issue</option>
+                        <option>Drainage / Flooding</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>2. Location (Barangay)</label>
+                    <select id="form-location" class="form-control">
+                        <option>Barangay Poblacion</option>
+                        <option>Barangay Compostela Proper</option>
+                        <option>Barangay Cogon</option>
+                        <option>Barangay Mulao</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>3. Upload Photo Evidence</label>
+                    <input type="file" id="form-photo" class="form-control" accept="image/*" onchange="previewImage(event)">
+                    <div id="image-preview-container" style="margin-top: 10px; display: none;">
+                        <img id="image-preview" src="" alt="Photo Preview" style="max-width: 100%; height: 180px; border-radius: 8px; object-fit: cover; border: 1px solid var(--border-color);">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>4. Detailed Description</label>
+                    <textarea id="form-desc" class="form-control" rows="4" placeholder="Describe the issue in detail..."></textarea>
+                </div>
+
+                <button class="btn-pink" style="width: 100%;" onclick="goToReview()">Review Report</button>
+            </div>
+        </div>
+
+        <!-- ================= 3. REVIEW REPORT ================= -->
+        <div id="page-review-report" class="page">
+            <div class="back-btn" onclick="showPage('page-create-report')">← Edit Form</div>
+            <div class="card" style="max-width: 700px; margin: 0 auto;">
+                <h2 style="color: var(--dark-pink); margin-bottom: 10px;">Review Report Details</h2>
+                <p style="color: #666; margin-bottom: 20px;">Please check all information before submitting.</p>
+
+                <div style="display: flex; flex-direction: column; gap: 15px; background: var(--light-pink); padding: 20px; border-radius: 8px;">
+                    <div><strong>Problem Type:</strong> <span id="review-type"></span></div>
+                    <div><strong>Location:</strong> <span id="review-location"></span></div>
+                    <div><strong>Description:</strong> <p id="review-desc" style="margin-top: 5px; color: #4b5563;"></p></div>
+                    <div><strong>Photo Attached:</strong> 
+                        <div id="review-photo-box" style="margin-top: 8px;">No image attached</div>
+                    </div>
+                </div>
+
+                <div style="display: flex; gap: 15px; margin-top: 25px;">
+                    <button class="btn-secondary" style="flex: 1;" onclick="showPage('page-create-report')">Edit Details</button>
+                    <button class="btn-pink" style="flex: 1;" onclick="submitReportFinal()">Submit Report</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- ================= 4. SUBMITTED SUCCESS PAGE ================= -->
+        <div id="page-success" class="page">
+            <div class="card" style="max-width: 550px; margin: 50px auto; text-align: center; padding: 50px 20px;">
+                <div style="width: 70px; height: 70px; background: #dcfce7; color: #16a34a; font-size: 2.5rem; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 20px auto;">✓</div>
+                <h2 style="color: var(--dark-pink); margin-bottom: 10px;">Report Submitted Successfully!</h2>
+                <p style="color: #666; margin-bottom: 30px;">Your report #<span id="success-id" style="font-weight: bold;"></span> has been received by the LGU of Compostela. You can track its progress in "My Reports".</p>
+                <button class="btn-pink" onclick="showPage('page-home')">Return to Home</button>
+            </div>
+        </div>
+
+        <!-- ================= 5. MY REPORTS PAGE ================= -->
+        <div id="page-my-reports" class="page">
+            <h2 style="color: var(--dark-pink); margin-bottom: 20px;">My Submitted Reports</h2>
+            
+            <div style="display: flex; gap: 10px; margin-bottom: 20px;">
+                <button class="btn-secondary" onclick="filterReports('all')">All</button>
+                <button class="btn-secondary" onclick="filterReports('Under Review')">Under Review</button>
+                <button class="btn-secondary" onclick="filterReports('In Progress')">In Progress</button>
+                <button class="btn-secondary" onclick="filterReports('Resolved')">Resolved</button>
+            </div>
+
+            <div id="my-reports-list">
+                <!-- Dynamically populated via JS -->
+            </div>
+        </div>
+
+        <!-- ================= 6. REPORT DETAIL PAGE ================= -->
+        <div id="page-report-detail" class="page">
+            <div class="back-btn" onclick="showPage('page-my-reports')">← Back to My Reports</div>
+            
+            <div class="card">
+                <div style="display: flex; justify-content: space-between; align-items: flex-start;">
+                    <div>
+                        <h2 id="detail-title" style="color: var(--dark-pink);">Broken Road</h2>
+                        <p style="color: #666; font-size: 0.9rem;" id="detail-meta">Report #BR-2026-0143 • Submitted Sep 19, 2026</p>
+                    </div>
+                    <span id="detail-badge" class="badge badge-review">Under Review</span>
+                </div>
+
+                <div class="tracker">
+                    <div class="step" id="step-1"><div class="step-circle">1</div>Submitted</div>
+                    <div class="step" id="step-2"><div class="step-circle">2</div>Under Review</div>
+                    <div class="step" id="step-3"><div class="step-circle">3</div>In Progress</div>
+                    <div class="step" id="step-4"><div class="step-circle">4</div>Resolved</div>
+                </div>
+
+                <hr style="border: none; border-top: 1px solid var(--border-color); margin: 20px 0;">
+
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 30px;">
+                    <div>
+                        <h3>Report Details</h3>
+                        <p style="margin-top: 10px;"><strong>Location:</strong> <span id="detail-location"></span></p>
+                        <p style="margin-top: 10px;"><strong>Description:</strong></p>
+                        <p id="detail-desc" style="color: #4b5563; background: var(--bg-color); padding: 12px; border-radius: 8px; margin-top: 5px;"></p>
+                    </div>
+                    <div>
+                        <h3>Submitted Evidence Photo</h3>
+                        <div id="detail-photo-container" style="margin-top: 10px;">
+                            <!-- Image JS load -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ================= 7. NOTIFICATIONS PAGE ================= -->
+        <div id="page-notifications" class="page">
+            <h2 style="color: var(--dark-pink); margin-bottom: 20px;">Notifications</h2>
+            <div id="notifications-list">
+                <!-- Dynamically populated -->
+            </div>
+        </div>
+
+        <!-- ================= 8. PROFILE PAGE ================= -->
+        <div id="page-profile" class="page">
+            <div class="card" style="max-width: 600px; margin: 0 auto; text-align: center;">
+                <div class="profile-icon" style="width: 80px; height: 80px; font-size: 2rem; margin: 0 auto 15px auto;">HV</div>
+                <h2>Hershey Villaquer</h2>
+                <p style="color: #666; margin-bottom: 20px;">Resident • Compostela, Cebu</p>
+
+                <div style="text-align: left; display: flex; flex-direction: column; gap: 10px;">
+                    <div class="card" onclick="showPage('page-settings')" style="cursor: pointer;">⚙️ Account Settings</div>
+                    <div class="card" onclick="showPage('page-help')" style="cursor: pointer;">❓ Help & Support</div>
+                    <div class="card" onclick="showPage('page-about')" style="cursor: pointer;">ℹ️ About Repara Compostela</div>
+                    <button class="btn-pink" style="background-color: #ef4444;" onclick="showPage('page-login')">Log Out</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- ================= 9. SETTINGS / HELP / ABOUT ================= -->
+        <div id="page-settings" class="page"><div class="card"><h2>Settings</h2><p style="margin-top: 10px;">Preferences and notifications settings.</p></div></div>
+        <div id="page-help" class="page"><div class="card"><h2>Help & Feedback</h2><p style="margin-top: 10px;">Have questions? Contact LGU support hotline at (032) 123-4567.</p></div></div>
+        <div id="page-about" class="page"><div class="card"><h2>About Repara Compostela</h2><p style="margin-top: 10px;">Repara Compostela is a public reporting prototype empowering citizens to report infrastructure and civic concerns directly to local authorities.</p></div></div>
+
+        <!-- ================= 10. LGU ADMIN DASHBOARD ================= -->
+        <div id="page-admin-dashboard" class="page">
+            <div class="card">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                    <div>
+                        <h2 style="color: var(--dark-pink);">🛡️ LGU Admin Command Center</h2>
+                        <p style="color: #666;">Authorized personnel portal to process and update resident reports</p>
+                    </div>
+                    <button class="btn-secondary" onclick="showPage('page-login')">Log Out Admin</button>
+                </div>
+
+                <table class="admin-table">
+                    <thead>
+                        <tr>
+                            <th>Report ID</th>
+                            <th>Issue Type</th>
+                            <th>Location</th>
+                            <th>Date</th>
+                            <th>Status</th>
+                            <th>Action (Update Status)</th>
+                        </tr>
+                    </thead>
+                    <tbody id="admin-table-body">
+                        <!-- Dynamically populated via JS -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        // Data State
+        let currentUploadedImage = null;
+        let reports = [
+            { id: 'BR-2026-0143', type: 'Broken Road', location: 'Barangay Poblacion', desc: 'The road has a deep crack making it unsafe for motorbikes and cars.', date: 'Sep 19, 2026 1:43 PM', status: 'Under Review', photo: null },
+            { id: 'BR-2026-1432', type: 'Busted Streetlight', location: 'Barangay Poblacion', desc: 'Streetlights are completely off near the main crossing.', date: 'Sep 18, 2026 5:30 AM', status: 'In Progress', photo: null },
+            { id: 'BR-2026-2011', type: 'Garbage Collection Issue', location: 'Barangay Cogon', desc: 'Uncollected trash bins overflowing on sidewalk.', date: 'July 21, 2026 7:30 AM', status: 'Resolved', photo: null }
+        ];
+
+        let notifications = [
+            { text: 'Update on Report #BR-2026-1432: Issue is now in progress.', date: 'Sep 18, 2026' }
+        ];
+
+        // Screen Navigation
+        function showPage(pageId) {
+            document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+            document.getElementById(pageId).classList.add('active');
+
+            // Header visibility control
+            const header = document.getElementById('main-header');
+            if (pageId === 'page-login' || pageId === 'page-admin-dashboard') {
+                header.style.display = 'none';
+            } else {
+                header.style.display = 'flex';
+            }
+
+            // Sync Nav highlights
+            document.querySelectorAll('.nav-btn').forEach(btn => btn.classList.remove('active'));
+            if(pageId === 'page-home') document.getElementById('nav-home').classList.add('active');
+            if(pageId === 'page-my-reports') {
+                document.getElementById('nav-reports').classList.add('active');
+                renderMyReports('all');
+            }
+            if(pageId === 'page-notifications') {
+                document.getElementById('nav-notifs').classList.add('active');
+                renderNotifications();
+            }
+
+            // Refresh Admin Table
+            if(pageId === 'page-admin-dashboard') renderAdminTable();
+            
+            // Refresh stats
+            updateStats();
+        }
+
+        function toggleSidebar() {
+            document.getElementById('sidebar').classList.toggle('open');
+            document.getElementById('overlay').classList.toggle('active');
+        }
+
+        // Login Handler
+        function toggleAdminNotice() {
+            const role = document.getElementById('login-role').value;
+            document.getElementById('admin-info').style.display = (role === 'admin') ? 'block' : 'none';
+        }
+
+        function handleLogin() {
+            const role = document.getElementById('login-role').value;
+            const user = document.getElementById('login-user').value;
+            const pass = document.getElementById('login-pass').value;
+
+            if (role === 'admin') {
+                if (user === 'admin' && pass === 'admin123') {
+                    showPage('page-admin-dashboard');
+                } else {
+                    alert('Invalid Admin credentials! Hint: admin / admin123');
+                }
+            } else {
+                document.getElementById('user-display-name').innerText = user || 'Hershey Villaquer';
+                showPage('page-home');
+            }
+        }
+
+        // Image Preview Handler
+        function previewImage(event) {
+            const reader = new FileReader();
+            reader.onload = function() {
+                const output = document.getElementById('image-preview');
+                output.src = reader.result;
+                currentUploadedImage = reader.result;
+                document.getElementById('image-preview-container').style.display = 'block';
+            };
+            if(event.target.files[0]) reader.readAsDataURL(event.target.files[0]);
+        }
+
+        // Report Creation Steps
+        function goToReview() {
+            const type = document.getElementById('form-type').value;
+            const loc = document.getElementById('form-location').value;
+            const desc = document.getElementById('form-desc').value;
+
+            if(!desc) {
+                alert('Please enter a description for the problem.');
+                return;
+            }
+
+            document.getElementById('review-type').innerText = type;
+            document.getElementById('review-location').innerText = loc;
+            document.getElementById('review-desc').innerText = desc;
+
+            const photoBox = document.getElementById('review-photo-box');
+            if(currentUploadedImage) {
+                photoBox.innerHTML = `<img src="${currentUploadedImage}" style="max-width: 100%; height: 150px; border-radius: 8px;">`;
+            } else {
+                photoBox.innerText = 'No image attached';
+            }
+
+            showPage('page-review-report');
+        }
+
+        function submitReportFinal() {
+            const randomID = 'BR-2026-' + Math.floor(1000 + Math.random() * 9000);
+            const newReport = {
+                id: randomID,
+                type: document.getElementById('review-type').innerText,
+                location: document.getElementById('review-location').innerText,
+                desc: document.getElementById('review-desc').innerText,
+                date: 'Just now',
+                status: 'Under Review',
+                photo: currentUploadedImage
+            };
+
+            reports.unshift(newReport);
+            document.getElementById('success-id').innerText = randomID;
+            
+            // Reset Form
+            document.getElementById('form-desc').value = '';
+            document.getElementById('image-preview-container').style.display = 'none';
+            currentUploadedImage = null;
+
+            showPage('page-success');
+        }
+
+        // Render My Reports
+        function renderMyReports(filter) {
+            const list = document.getElementById('my-reports-list');
+            list.innerHTML = '';
+
+            const filtered = reports.filter(r => filter === 'all' || r.status === filter);
+
+            if(filtered.length === 0) {
+                list.innerHTML = '<p style="color: #666; text-align: center; margin-top: 30px;">No reports found in this category.</p>';
+                return;
+            }
+
+            filtered.forEach(r => {
+                let badgeClass = r.status === 'Under Review' ? 'badge-review' : (r.status === 'In Progress' ? 'badge-progress' : 'badge-resolved');
+                const card = document.createElement('div');
+                card.className = 'card';
+                card.style.cursor = 'pointer';
+                card.onclick = () => openReportDetail(r.id);
+                card.innerHTML = `
+                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                        <div>
+                            <h3 style="color: var(--dark-pink);">${r.type}</h3>
+                            <p style="font-size: 0.85rem; color: #666; margin-top: 4px;">📍 ${r.location} • Submitted: ${r.date}</p>
+                        </div>
+                        <span class="badge ${badgeClass}">${r.status}</span>
+                    </div>
+                `;
+                list.appendChild(card);
+            });
+        }
+
+        function openReportDetail(id) {
+            const report = reports.find(r => r.id === id);
+            if(!report) return;
+
+            document.getElementById('detail-title').innerText = report.type;
+            document.getElementById('detail-meta').innerText = `Report #${report.id} • Submitted ${report.date}`;
+            document.getElementById('detail-location').innerText = report.location;
+            document.getElementById('detail-desc').innerText = report.desc;
+
+            let badge = document.getElementById('detail-badge');
+            badge.innerText = report.status;
+            badge.className = 'badge ' + (report.status === 'Under Review' ? 'badge-review' : (report.status === 'In Progress' ? 'badge-progress' : 'badge-resolved'));
+
+            // Progress Bar Tracker
+            for(let i=1; i<=4; i++) document.getElementById(`step-${i}`).classList.remove('active');
+            document.getElementById('step-1').classList.add('active');
+            if(report.status === 'Under Review' || report.status === 'In Progress' || report.status === 'Resolved') document.getElementById('step-2').classList.add('active');
+            if(report.status === 'In Progress' || report.status === 'Resolved') document.getElementById('step-3').classList.add('active');
+            if(report.status === 'Resolved') document.getElementById('step-4').classList.add('active');
+
+            // Photo Preview
+            const imgContainer = document.getElementById('detail-photo-container');
+            if(report.photo) {
+                imgContainer.innerHTML = `<img src="${report.photo}" style="max-width: 100%; height: 200px; border-radius: 8px; border: 1px solid var(--border-color);">`;
+            } else {
+                imgContainer.innerHTML = `<div style="background: #f3f4f6; padding: 40px; text-align: center; border-radius: 8px; color: #888;">No photo attached</div>`;
+            }
+
+            showPage('page-report-detail');
+        }
+
+        // Notifications
+        function renderNotifications() {
+            const container = document.getElementById('notifications-list');
+            container.innerHTML = '';
+            notifications.forEach(n => {
+                const card = document.createElement('div');
+                card.className = 'card';
+                card.innerHTML = `<p>🔔 ${n.text}</p><span style="font-size: 0.75rem; color: #999;">${n.date}</span>`;
+                container.appendChild(card);
+            });
+        }
+
+        // Admin Table & Status Update
+        function renderAdminTable() {
+            const tbody = document.getElementById('admin-table-body');
+            tbody.innerHTML = '';
+
+            reports.forEach(r => {
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td><b>${r.id}</b></td>
+                    <td>${r.type}</td>
+                    <td>${r.location}</td>
+                    <td>${r.date}</td>
+                    <td><b>${r.status}</b></td>
+                    <td>
+                        <select class="form-control" onchange="updateStatusByAdmin('${r.id}', this.value)" style="padding: 4px;">
+                            <option value="" disabled selected>Update Status</option>
+                            <option value="Under Review">Under Review</option>
+                            <option value="In Progress">In Progress</option>
+                            <option value="Resolved">Resolved</option>
+                        </select>
+                    </td>
+                `;
+                tbody.appendChild(tr);
+            });
+        }
+
+        function updateStatusByAdmin(id, newStatus) {
+            const report = reports.find(r => r.id === id);
+            if(report) {
+                report.status = newStatus;
+                notifications.unshift({
+                    text: `Update on Report #${id}: Status changed to "${newStatus}"`,
+                    date: 'Just now'
+                });
+                document.getElementById('notif-badge').innerText = notifications.length;
+                alert(`Successfully updated Report ${id} to ${newStatus}! Notification sent to resident.`);
+                renderAdminTable();
+            }
+        }
+
+        function updateStats() {
+            document.getElementById('stat-total').innerText = reports.length;
+            document.getElementById('stat-progress').innerText = reports.filter(r => r.status === 'In Progress').length;
+            document.getElementById('stat-resolved').innerText = reports.filter(r => r.status === 'Resolved').length;
+        }
+    </script>
+</body>
+</html>
